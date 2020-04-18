@@ -4,6 +4,16 @@ export (PackedScene) var Mob
 var score
 
 func _ready():
+	var scr = $Player.get_viewport_rect().size
+	$StartPosition.position.x = scr.x / 2
+	$StartPosition.position.y = scr.y * float(2)/float(3)
+	$MobPath.curve.clear_points()
+	$MobPath.curve.add_point(Vector2(0, 0))
+	$MobPath.curve.add_point(Vector2(scr.x, 0))
+	$MobPath.curve.add_point(Vector2(scr.x, scr.y))
+	$MobPath.curve.add_point(Vector2(0, scr.y))
+	$MobPath.curve.add_point(Vector2(0, 0))
+
 	randomize()
 
 func game_over(name):
