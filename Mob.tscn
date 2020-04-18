@@ -15,35 +15,38 @@ animations = [ {
 "name": "Jocelyn the Jellyfish",
 "speed": 2.0
 }, {
-"frames": [ ExtResource( 7 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "Greg the Whale",
-"speed": 3.0
-}, {
 "frames": [ ExtResource( 3 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "Brian the Fish",
 "speed": 4.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "Greg the Whale",
+"speed": 3.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 13.7946
-height = 91.3953
+radius = 17.8822
+height = 107.747
 
 [node name="Mob" type="RigidBody2D"]
 collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 1 )
 animation = "Brian the Fish"
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 10.8072, 6.25679 )
-rotation = 1.70519
+rotation = 1.5708
 shape = SubResource( 2 )
 
 [node name="Visibility" type="VisibilityNotifier2D" parent="."]

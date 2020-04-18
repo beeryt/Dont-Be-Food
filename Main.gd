@@ -55,9 +55,12 @@ func _on_MobTimer_timeout():
 	mob.position = $MobPath/MobSpawnLocation.position
 	# add some randomness to the direction
 	direction += rand_range(-PI / 4, PI / 4)
+	while (direction < 0): direction += 2 * PI
 	mob.rotation = direction
 	if (mob.rotation > PI/2):
 		mob.sprite.flip_v = true
+	if (mob.rotation > PI * 3 / float(2)):
+		mob.sprite.flip_v = false
 	# set the velocity
 	mob.linear_velocity = Vector2(rand_range(mob.min_speed, mob.max_speed), 0)
 	mob.linear_velocity = mob.linear_velocity.rotated(direction)
