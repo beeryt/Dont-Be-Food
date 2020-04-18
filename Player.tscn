@@ -18,7 +18,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 7.43031
+radius = 5.76166
 height = 18.6949
 
 [node name="Player" type="Area2D"]
@@ -28,6 +28,7 @@ __meta__ = {
 }
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+rotation = 0.23911
 scale = Vector2( 0.08, 0.07 )
 frames = SubResource( 1 )
 animation = "up"
