@@ -68,3 +68,13 @@ func _on_Username_text_changed(_new_text):
 
 func _on_AutoSwitch_toggled(_button_pressed):
 	emit_signal("setting_changed")
+
+
+func _on_Username_focus_entered():
+	if OS.get_name() == "HTML5":
+		print("HTML5 operating system detected")
+		var existing = $Container/HBoxContainer/Username.text
+		var prompt = 'prompt("Enter Username", "%s");' % [existing]
+		var new_text = JavaScript.eval(prompt)
+		if new_text:
+			$Container/HBoxContainer/Username.text = new_text

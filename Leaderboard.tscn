@@ -97,6 +97,7 @@ text = "Auto-Submit on Game Over"
 [node name="HTTPPost" type="HTTPRequest" parent="."]
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
+[connection signal="focus_entered" from="Container/HBoxContainer/Username" to="." method="_on_Username_focus_entered"]
 [connection signal="text_changed" from="Container/HBoxContainer/Username" to="." method="_on_Username_text_changed"]
 [connection signal="pressed" from="Container/HBoxContainer/PostButton" to="." method="_on_PostButton_pressed"]
 [connection signal="toggled" from="Container/AutoSwitch" to="." method="_on_AutoSwitch_toggled"]
