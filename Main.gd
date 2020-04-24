@@ -15,7 +15,9 @@ func _ready():
 	$MobPath.curve.add_point(Vector2(0, 0))
 
 	randomize()
+	load_game()
 
+func load_game():
 	var load_file = File.new()
 	if load_file.file_exists("user://save.json"):
 		load_file.open("user://save.json", File.READ)
@@ -24,9 +26,7 @@ func _ready():
 		$HUD/Leaderboard/Container/HBoxContainer/Username.text = data["username"]
 		$HUD/Leaderboard/Container/AutoSwitch.pressed = data["auto"]
 
-
-func _notification(what):
-	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+func save_game():
 		var save_file = File.new()
 		save_file.open("user://save.json", File.WRITE)
 		var data = JSON.print({
@@ -35,7 +35,13 @@ func _notification(what):
 		})
 		print("Saving: ", data)
 		save_file.store_line(data)
+
+
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		save_game()
 		get_tree().quit()
+
 
 func game_over(name):
 	$ScoreTimer.stop()
@@ -43,7 +49,7 @@ func game_over(name):
 
 	$HUD/Leaderboard.latest_score = score
 	$HUD.show_game_over(name)
-	if $HUD/Leaderboard/AutoSwitch.pressed:
+	if $HUD/Leaderboard/Container/AutoSwitch.pressed:
 		$HUD/Leaderboard.submit_score(score)
 
 	$Music.stop()
@@ -89,4 +95,4 @@ func _on_MobTimer_timeout():
 	mob.linear_velocity = Vector2(rand_range(mob.min_speed, mob.max_speed), 0)
 	mob.linear_velocity = mob.linear_velocity.rotated(direction)
 
-	$HUD.connect("start_game", mob, "_on_start_game")
+	assert(0 == $HUD.connect("start_game", mob, "_on_start_game"))
