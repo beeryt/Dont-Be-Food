@@ -16,11 +16,35 @@ func _ready():
 
 	randomize()
 
+	var load_file = File.new()
+	if load_file.file_exists("user://save.json"):
+		load_file.open("user://save.json", File.READ)
+		var data = parse_json(load_file.get_as_text())
+		print("Loading: ", data)
+		$HUD/Leaderboard/Username.text = data["username"]
+		$HUD/Leaderboard/AutoSwitch.pressed = data["auto"]
+
+
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		var save_file = File.new()
+		save_file.open("user://save.json", File.WRITE)
+		var data = JSON.print({
+			"username": $HUD/Leaderboard/Username.text,
+			"auto": $HUD/Leaderboard/AutoSwitch.pressed
+		})
+		print("Saving: ", data)
+		save_file.store_line(data)
+		get_tree().quit()
+
 func game_over(name):
 	$ScoreTimer.stop()
 	$MobTimer.stop()
 
+	$HUD/Leaderboard.latest_score = score
 	$HUD.show_game_over(name)
+	if $HUD/Leaderboard/AutoSwitch.pressed:
+		$HUD/Leaderboard.submit_score(score)
 
 	$Music.stop()
 	$DeathSound.play()
