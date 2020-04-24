@@ -21,8 +21,8 @@ func _ready():
 		load_file.open("user://save.json", File.READ)
 		var data = parse_json(load_file.get_as_text())
 		print("Loading: ", data)
-		$HUD/Leaderboard/Username.text = data["username"]
-		$HUD/Leaderboard/AutoSwitch.pressed = data["auto"]
+		$HUD/Leaderboard/Container/HBoxContainer/Username.text = data["username"]
+		$HUD/Leaderboard/Container/AutoSwitch.pressed = data["auto"]
 
 
 func _notification(what):
@@ -30,8 +30,8 @@ func _notification(what):
 		var save_file = File.new()
 		save_file.open("user://save.json", File.WRITE)
 		var data = JSON.print({
-			"username": $HUD/Leaderboard/Username.text,
-			"auto": $HUD/Leaderboard/AutoSwitch.pressed
+			"username": $HUD/Leaderboard/Container/HBoxContainer/Username.text,
+			"auto": $HUD/Leaderboard/Container/AutoSwitch.pressed
 		})
 		print("Saving: ", data)
 		save_file.store_line(data)

@@ -7,6 +7,9 @@
 size = 64
 font_data = ExtResource( 2 )
 
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 2 )
+
 [sub_resource type="DynamicFont" id=2]
 size = 32
 font_data = ExtResource( 2 )
@@ -14,37 +17,26 @@ font_data = ExtResource( 2 )
 [sub_resource type="DynamicFont" id=3]
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=4]
-font_data = ExtResource( 2 )
-
-[node name="Leaderboard" type="Control"]
+[node name="Leaderboard" type="MarginContainer"]
 anchor_right = 1.0
-anchor_bottom = 0.8
-margin_top = 93.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 32
+custom_constants/margin_top = 64
+custom_constants/margin_left = 32
+custom_constants/margin_bottom = 64
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[node name="Container" type="VBoxContainer" parent="."]
+margin_left = 32.0
+margin_top = 64.0
+margin_right = 456.0
+margin_bottom = 656.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_left = 0.5
-anchor_top = 0.4
-anchor_right = 0.5
-anchor_bottom = 0.4
-margin_left = -143.0
-margin_top = -124.4
-margin_right = 143.0
-margin_bottom = 172.6
-custom_constants/separation = 32
-alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="."]
-anchor_right = 1.0
+[node name="Title" type="Label" parent="Container"]
+margin_right = 424.0
 margin_bottom = 78.0
 custom_fonts/font = SubResource( 1 )
 text = "Leaderboard"
@@ -54,37 +46,54 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PostButton" type="Button" parent="."]
-margin_left = 57.2258
-margin_top = 389.768
-margin_right = 263.226
-margin_bottom = 434.768
+[node name="Scores" type="VBoxContainer" parent="Container"]
+margin_top = 82.0
+margin_right = 424.0
+margin_bottom = 499.0
+size_flags_vertical = 3
+custom_constants/separation = 8
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Container"]
+margin_top = 503.0
+margin_right = 424.0
+margin_bottom = 548.0
+
+[node name="Username" type="LineEdit" parent="Container/HBoxContainer"]
+margin_right = 214.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 4 )
+align = 1
+placeholder_text = "username"
+caret_blink = true
+caret_blink_speed = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PostButton" type="Button" parent="Container/HBoxContainer"]
+margin_left = 218.0
+margin_right = 424.0
+margin_bottom = 45.0
 custom_fonts/font = SubResource( 2 )
 text = "Post Latest"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AutoSwitch" type="CheckButton" parent="."]
-margin_left = 149.264
-margin_top = 452.491
-margin_right = 333.264
-margin_bottom = 492.491
+[node name="AutoSwitch" type="CheckButton" parent="Container"]
+margin_top = 552.0
+margin_right = 424.0
+margin_bottom = 592.0
 custom_fonts/font = SubResource( 3 )
 text = "Auto-Submit"
 
-[node name="Username" type="LineEdit" parent="."]
-margin_left = 279.0
-margin_top = 394.48
-margin_right = 458.0
-margin_bottom = 434.48
-custom_fonts/font = SubResource( 4 )
-align = 1
-placeholder_text = "username"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="HTTPPost" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[connection signal="pressed" from="Container/HBoxContainer/PostButton" to="." method="_on_PostButton_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
-[connection signal="pressed" from="PostButton" to="." method="_on_PostButton_pressed"]
